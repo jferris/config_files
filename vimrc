@@ -5,11 +5,8 @@ set nocompatible
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file
-endif
+set nobackup
+set nowritebackup
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
@@ -62,9 +59,14 @@ else
 endif " has("autocmd")
 
 if has("folding")
-  "set foldenable
-  "set foldmethod=syntax
-  "set foldlevel=3
+  set foldenable
+  set foldmethod=syntax
+  set foldlevel=1
+  set foldnestmax=2
+  set foldtext=getline(v:foldstart).'\ ...\ '.substitute(getline(v:foldend),'\ ','','g').'\ '
+
+  " automatically open folds at the starting cursor position
+  " autocmd BufReadPost .foldo!
 endif
 
 " Softtabs, 2 spaces
@@ -78,6 +80,11 @@ autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+
+hi MatchParen ctermbg=0 ctermfg=3
+
+" Hide search highlighting
+map ,nh :nohls <CR>
 
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: ,e
@@ -99,7 +106,22 @@ map gb <C-^>
 " Insert mode: Ctrl+V
 imap <C-V> <C-R>"
 
+" Command to resolve the conflicted state of the current file
+command Resolve :!svn resolved %
+
+" Command to restart autotest
+command Atres :!autotest_ctl -INT
+
+" Command to stop autotest
+command Atstop :!autotest_ctl
+
 " Inserts the path of the currently edited file into a command
 " Command mode: Ctrl+P
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+
+" Use dark colors
+set bg=dark
+
+" Ruby color mappings
+highlight link rubySymbol rubyString
 
