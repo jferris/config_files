@@ -125,3 +125,5 @@ set bg=dark
 " Ruby color mappings
 highlight link rubySymbol rubyString
 
+" For Haml
+au! BufRead,BufNewFile *.haml         setfiletype haml
