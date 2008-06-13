@@ -62,8 +62,8 @@ if has("folding")
   set foldenable
   set foldmethod=syntax
   set foldlevel=1
-  set foldnestmax=2
-  set foldtext=getline(v:foldstart).'\ ...\ '.substitute(getline(v:foldend),'\ ','','g').'\ '
+  set foldnestmax=3
+  set foldtext=strpart(getline(v:foldstart),0,50).'\ ...\ '.substitute(getline(v:foldend),'^[\ #]*','','g').'\ '
 
   " automatically open folds at the starting cursor position
   " autocmd BufReadPost .foldo!
@@ -124,6 +124,9 @@ set bg=dark
 
 " Ruby color mappings
 highlight link rubySymbol rubyString
+
+" Adds a blank line after the current line
+nmap cl o<Esc>^Dk
 
 " For Haml
 au! BufRead,BufNewFile *.haml         setfiletype haml
