@@ -16,7 +16,9 @@ setopt auto_cd
 export EDITOR=vim
 
 # paths
-source ~/.pathrc
+if [ -e "$HOME/.pathrc" ]; then
+  source "$HOME/.pathrc"
+fi
 
 # makes color constants available
 autoload -U colors
