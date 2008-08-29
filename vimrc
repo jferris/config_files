@@ -62,7 +62,7 @@ if has("folding")
   set foldenable
   set foldmethod=syntax
   set foldlevel=1
-  set foldnestmax=3
+  set foldnestmax=2
   set foldtext=strpart(getline(v:foldstart),0,50).'\ ...\ '.substitute(getline(v:foldend),'^[\ #]*','','g').'\ '
 
   " automatically open folds at the starting cursor position
@@ -73,13 +73,6 @@ endif
 set tabstop=2
 set shiftwidth=2
 set expandtab
-
-" Enable omnicomplete for Ruby
-" Ctrl+X Ctrl+O
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 
 hi MatchParen ctermbg=0 ctermfg=3
 
@@ -127,6 +120,13 @@ highlight link rubySymbol rubyString
 
 " Adds a blank line after the current line
 nmap cl o<Esc>^Dk
+
+" Maps autocomplete to tab
+imap <Tab> <C-N>
+
+" Duplicate a selection
+" Visual mode: D
+vmap D y'>p
 
 " For Haml
 au! BufRead,BufNewFile *.haml         setfiletype haml
