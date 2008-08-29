@@ -31,7 +31,7 @@ export CLICOLOR=1
 setopt prompt_subst
 
 # prompt
-export PS1='%{$fg_bold[blue]%}%~$(git_color)$(git_prompt_info)% %{$reset_color%} $ '
+export PS1='%{$fg_bold[blue]%}${SSH_CONNECTION+%n@%m:}%~$(git_color)$(git_prompt_info)% %{$reset_color%} $ '
 
 # vi mode
 bindkey -v
