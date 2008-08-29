@@ -1,7 +1,16 @@
-# get the name of the branch we are on
+# print the name of the current branch and working copy status
 git_prompt_info() {
-  ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
-  echo " ${ref#refs/heads/}"
+  ref=$(git-symbolic-ref HEAD 2> /dev/null)
+  if [[ -n `git-status 2> /dev/null | grep 'Changes to be committed:'` ]]; then
+    gitstatus=" $fg[green]modified$reset_color"
+  elif [[ -n `git-status 2> /dev/null | grep 'use "git add'` ]]; then
+    gitstatus=" $fg[red]modified$reset_color"
+  else
+    gitstatus=''
+  fi
+  if [[ -n $ref ]]; then
+    echo " $fg_bold[green]${ref#refs/heads/}$reset_color$gitstatus"
+  fi
 }
 
 # returns a color to indicate the state of the working copy
@@ -31,7 +40,7 @@ export CLICOLOR=1
 setopt prompt_subst
 
 # prompt
-export PS1='%{$fg_bold[blue]%}${SSH_CONNECTION+%n@%m:}%~$(git_color)$(git_prompt_info)% %{$reset_color%} $ '
+export PS1='%{$fg_bold[blue]%}${SSH_CONNECTION+%n@%m:}%~%{$reset_color%}$(git_prompt_info) $ '
 
 # vi mode
 bindkey -v
