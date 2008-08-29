@@ -9,17 +9,21 @@ git_color() {
   echo "$fg_bold[green]"
 }
 
+# automatically enter directories without cd
+setopt auto_cd
+
+# use vim as an editor
+export EDITOR=vim
+
 # paths
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export PATH=$PATH:/usr/local/mysql/bin
-export PATH=$PATH:/usr/local/git/bin
-export MANPATH=$MANPATH:/usr/local/git/man
-export MAGICK_HOME=/usr/local/ImageMagick-6.3.7
-export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib"
+source ~/.pathrc
 
 # makes color constants available
 autoload -U colors
 colors
+
+# enable colored output from ls, etc
+export CLICOLOR=1
 
 # expand functions in the prompt
 setopt prompt_subst
