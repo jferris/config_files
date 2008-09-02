@@ -5,11 +5,13 @@ git_prompt_info() {
     gitstatus=" %{$fg[green]%}modified%{$reset_color%}"
   elif [[ -n `git-status 2> /dev/null | grep 'use "git add'` ]]; then
     gitstatus=" %{$fg[red]%}modified%{$reset_color%}"
+  elif [[ -n `git-diff --shortstat ORIGIN..HEAD 2> /dev/null` ]]; then
+    gitstatus=" %{$fg[green]%}unpushed%{$reset_color%}"
   else
     gitstatus=''
   fi
   if [[ -n $ref ]]; then
-    echo " %{$fg_bold[green]%}${ref#refs/heads/}%{$reset_color%}$gitstatus"
+    echo "%{$fg_bold[green]%}/${ref#refs/heads/}%{$reset_color%}$gitstatus"
   fi
 }
 
