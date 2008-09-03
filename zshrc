@@ -9,7 +9,7 @@ git_prompt_info() {
     gitstatus=''
   fi
   if [[ -n $ref ]]; then
-    echo " %{$fg_bold[green]%}${ref#refs/heads/}%{$reset_color%}$gitstatus"
+    echo "%{$fg_bold[green]%}/${ref#refs/heads/}%{$reset_color%}$gitstatus"
   fi
 }
 
@@ -35,7 +35,7 @@ export CLICOLOR=1
 setopt prompt_subst
 
 # prompt
-export PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}$(git_prompt_info) $ '
+export PS1='[${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}$(git_prompt_info)] '
 
 # vi mode
 bindkey -v
