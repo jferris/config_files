@@ -1,0 +1,1 @@
+alias remigrate="rake db:migrate && rake db:migrate:redo && rake db:schema:dump db:test:prepare"
