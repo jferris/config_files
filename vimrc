@@ -130,3 +130,10 @@ vmap D y'>p
 
 " For Haml
 au! BufRead,BufNewFile *.haml         setfiletype haml
+
+" No Help, please
+nmap <F1> <Esc>
+
+" Edit routes
+command Rroutes :e config/routes.rb
+command RTroutes :tabe config/routes.rb
