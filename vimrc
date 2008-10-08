@@ -76,6 +76,9 @@ set expandtab
 
 hi MatchParen ctermbg=0 ctermfg=3
 
+" Always display the status line
+set laststatus=2
+
 " Hide search highlighting
 map ,nh :nohls <CR>
 
@@ -133,6 +136,9 @@ au! BufRead,BufNewFile *.haml         setfiletype haml
 
 " No Help, please
 nmap <F1> <Esc>
+
+" Press ^F from insert mode to insert the current file name
+imap <C-F> <C-R>=expand("%")<CR>
 
 " Edit routes
 command Rroutes :e config/routes.rb
