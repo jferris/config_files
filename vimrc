@@ -21,7 +21,7 @@ map Q gq
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
   set hlsearch
 endif
@@ -103,20 +103,22 @@ map gb <C-^>
 imap <C-V> <C-R>"
 
 " Command to resolve the conflicted state of the current file
-command Resolve :!svn resolved %
+command! Resolve :!svn resolved %
 
 " Command to restart autotest
-command Atres :!autotest_ctl -INT
+command! Atres :!autotest_ctl -INT
 
 " Command to stop autotest
-command Atstop :!autotest_ctl
+command! Atstop :!autotest_ctl
 
 " Inserts the path of the currently edited file into a command
 " Command mode: Ctrl+P
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
 " Use dark colors
-set bg=dark
+if !has("gui_running")
+  " set bg=dark
+endif
 
 " Ruby color mappings
 highlight link rubySymbol rubyString
@@ -141,8 +143,8 @@ nmap <F1> <Esc>
 imap <C-F> <C-R>=expand("%")<CR>
 
 " Edit routes
-command Rroutes :e config/routes.rb
-command RTroutes :tabe config/routes.rb
+command! Rroutes :e config/routes.rb
+command! RTroutes :tabe config/routes.rb
 
 " Local config
 if filereadable(".vimrc.local")
