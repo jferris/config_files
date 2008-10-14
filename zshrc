@@ -31,6 +31,11 @@ setopt auto_cd
 # use vim as an editor
 export EDITOR=vim
 
+# aliases
+if [ -e "$HOME/.aliases" ]; then
+  source "$HOME/.aliases"
+fi
+
 # paths
 if [ -e "$HOME/.pathrc" ]; then
   source "$HOME/.pathrc"
