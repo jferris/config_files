@@ -143,3 +143,9 @@ imap <C-F> <C-R>=expand("%")<CR>
 " Edit routes
 command Rroutes :e config/routes.rb
 command RTroutes :tabe config/routes.rb
+
+" Use Ack instead of Grep when available
+if executable("ack")
+  set grepprg=ack\ -H\ --nogroup --nocolor
+endif
+
