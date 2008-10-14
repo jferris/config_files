@@ -7,8 +7,9 @@ highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
 " Window size
+set winwidth=80
 let g:halfsize = 106
-let g:fullsize = 160
+let g:fullsize = 161
 set lines=57
 let &columns = g:halfsize
 
@@ -25,19 +26,3 @@ highlight Pmenusel guibg=#4040D0 guifg=White
 " Syntax colors
 highlight String  guifg=DarkGray
 
-"Automatically expand window when vertically split
-set equalalways
-set winwidth=80
-function IsWinSplit()
-  return &columns != winwidth(winnr())
-endfunction
-
-function SetWidthForSplit()
-  if IsWinSplit()
-    let &columns = g:fullsize
-  else
-    let &columns = g:halfsize
-  endif
-endfunction
-
-autocmd WinEnter * call SetWidthForSplit()
