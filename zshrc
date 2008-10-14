@@ -41,6 +41,10 @@ if [ -e "$HOME/.pathrc" ]; then
   source "$HOME/.pathrc"
 fi
 
+if [ -e "$HOME/.zshrc.local" ]; then
+  source "$HOME/.zshrc.local"
+fi
+
 # makes color constants available
 autoload -U colors
 colors
