@@ -144,6 +144,11 @@ imap <C-F> <C-R>=expand("%")<CR>
 command Rroutes :e config/routes.rb
 command RTroutes :tabe config/routes.rb
 
+" Local config
+if filereadable(".vimrc.local")
+  source .vimrc.local
+endif
+
 " Use Ack instead of Grep when available
 if executable("ack")
   set grepprg=ack\ -H\ --nogroup --nocolor
