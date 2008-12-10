@@ -74,8 +74,6 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
-hi MatchParen ctermbg=0 ctermfg=3
-
 " Always display the status line
 set laststatus=2
 
@@ -93,14 +91,6 @@ map ,t :tabe <C-R>=expand("%:p:h") . "/" <CR>
 " Inserts the path of the currently edited file into a command
 " Command mode: Ctrl+P
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-
-" Use dark colors
-if !has("gui_running")
-  " set bg=dark
-endif
-
-" Ruby color mappings
-highlight link rubySymbol rubyString
 
 " Maps autocomplete to tab
 imap <Tab> <C-N>
@@ -132,3 +122,5 @@ if executable("ack")
   set grepprg=ack\ -H\ --nogroup\ --nocolor
 endif
 
+" Color scheme
+colorscheme vividchalk
