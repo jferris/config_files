@@ -90,27 +90,6 @@ map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
 " Normal mode: ,t
 map ,t :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
-" Duplicates the current tab
-" Normal mode: Ctrl+T
-map <C-T> :tabe <C-R>=expand("%:p") <CR> <CR>
-
-" Edits the previously edited file
-" Normal mode: gb
-map gb <C-^>
-
-" Put
-" Insert mode: Ctrl+V
-imap <C-V> <C-R>"
-
-" Command to resolve the conflicted state of the current file
-command! Resolve :!svn resolved %
-
-" Command to restart autotest
-command! Atres :!autotest_ctl -INT
-
-" Command to stop autotest
-command! Atstop :!autotest_ctl
-
 " Inserts the path of the currently edited file into a command
 " Command mode: Ctrl+P
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
@@ -122,9 +101,6 @@ endif
 
 " Ruby color mappings
 highlight link rubySymbol rubyString
-
-" Adds a blank line after the current line
-nmap cl o<Esc>^Dk
 
 " Maps autocomplete to tab
 imap <Tab> <C-N>
