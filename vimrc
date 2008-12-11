@@ -124,3 +124,7 @@ endif
 
 " Color scheme
 colorscheme vividchalk
+
+" Numbers
+set number
+set numberwidth=5
