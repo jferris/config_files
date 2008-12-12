@@ -92,9 +92,6 @@ map ,t :tabe <C-R>=expand("%:p:h") . "/" <CR>
 " Command mode: Ctrl+P
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
-" Maps autocomplete to tab
-imap <Tab> <C-N>
-
 " Duplicate a selection
 " Visual mode: D
 vmap D y'>p
