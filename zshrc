@@ -16,6 +16,9 @@ fi
 # vi mode
 bindkey -v
 
+# use incremental search
+bindkey ^R history-incremental-search-backward
+
 # expand functions in the prompt
 setopt prompt_subst
 
