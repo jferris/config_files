@@ -1,3 +1,22 @@
+" functions
+function! SpecDescribed()
+  let curline = line(".")
+  let curcol  = col(".")
+  let line = search("describe", "bW")
+  if line > 0
+    let line = getline(line)
+    let subject = substitute(matchstr(line, "describe [^, ]*"), "^describe ", "", "")
+    call cursor(curline, curcol)
+    return subject
+  else
+    return 'subject'
+  endif
+endfunction
+
+function! SpecSubject()
+  return "@" . rails#underscore(SpecDescribed())
+endfunction
+
 " shoulda validation macros
 Snippet shal should_allow_values_for :<{attribute}>, <{}>
 Snippet should_ensure_length_at_least should_ensure_length_at_least :<{attribute}>, <{length}><CR><{}>
@@ -33,8 +52,14 @@ Snippet context context "<{description}>" do<CR>setup do<CR><{}><CR>end<CR>end
 Snippet sh should "<{description}>" do<CR><{}><CR>end
 
 "rspec
-Snippet desc describe "<{description}>" do<CR>before do<CR><{}><CR>end<CR>end
+Snippet desc describe <{class}>, "<{description}>" do<CR>before do<CR><{}><CR>end<CR>end
+Snippet descn describe <{class}> do<CR>before do<CR><{}><CR>end<CR>end
+Snippet descs describe "<{description}>" do<CR>before do<CR><{}><CR>end<CR>end
 Snippet it it "should <{description}>" do<CR><{}><CR>end
+Snippet itsh it "should <{description}>" do<CR>``SpecSubject()``.should <{}><CR>end
+Snippet itshbe it "should <{description}>" do<CR>``SpecSubject()``.should be_<{}><CR>end
+Snippet atsh it "should <{description}>" do<CR>``SpecSubject()``.<{attr}>.should <{}><CR>end
+Snippet atshbe it "should <{description}>" do<CR>``SpecSubject()``.<{attr}>.should be_<{}><CR>end
 
 " assertions
 Snippet ass assert <{}>
