@@ -17,6 +17,13 @@ function! SpecSubject()
   return "@" . rails#underscore(SpecDescribed())
 endfunction
 
+" active record associations
+Snippet bt belongs_to :<{}>
+Snippet ho has_one :<{}>
+Snippet hm has_many :<{}>
+Snippet habtm has_and_belongs_to_many :<{}>
+Snippet hmt has_many :<{association}>, :through => <{}>
+
 " shoulda validation macros
 Snippet shal should_allow_values_for :<{attribute}>, <{}>
 Snippet should_ensure_length_at_least should_ensure_length_at_least :<{attribute}>, <{length}><CR><{}>
@@ -48,7 +55,7 @@ Snippet shroute should_route :<{method}>, "<{path}>", :action => :<{}>
 Snippet shfl should_set_the_flash_to :<{}>
 
 " shoulda contexts
-Snippet context context "<{description}>" do<CR>setup do<CR><{}><CR>end<CR>end
+Snippet cont context "<{description}>" do<CR>setup do<CR><{}><CR>end<CR>end
 Snippet sh should "<{description}>" do<CR><{}><CR>end
 
 "rspec
