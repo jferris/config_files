@@ -24,6 +24,10 @@ Snippet hm has_many :<{}>
 Snippet habtm has_and_belongs_to_many :<{}>
 Snippet hmt has_many :<{association}>, :through => <{}>
 
+" active record validations
+Snippet valpo validates_presence_of :<{attribute}><CR><{}>
+Snippet valpows validates_presence_of :<{attribute}>, :scope => <{scope}><CR><{}>
+
 " shoulda validation macros
 Snippet shal should_allow_values_for :<{attribute}>, <{}>
 Snippet should_ensure_length_at_least should_ensure_length_at_least :<{attribute}>, <{length}><CR><{}>
