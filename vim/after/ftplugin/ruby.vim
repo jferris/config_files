@@ -41,6 +41,12 @@ Snippet shreqacc should_require_acceptance_of :<{}>
 Snippet shreq should_require_attributes :<{}>
 Snippet shrequniq should_require_unique_attributes :<{}>
 
+" Factory girl
+Snippet F Factory(:<{factory}>)<{}>
+Snippet Fb Factory.build(:<{factory}>)<{}>
+Snippet Fw Factory(:<{factory}>, :<{}>)
+Snippet Fbw Factory.build(:<{factory}>, :<{}>)
+
 " shoulda association macros
 Snippet shbt should_belong_to :<{association}><CR><{}>
 Snippet shhabtm should_have_and_belong_to_many :<{association}><CR><{}>
