@@ -17,6 +17,10 @@ function! SpecSubject()
   return "@" . rails#underscore(SpecDescribed())
 endfunction
 
+" general ruby snippets
+Snippet each <{collection}>.each do |<{member}>|<CR><{member}>.<{}><CR>end
+Snippet collect <{collection}>.collect {|<{member}>| <{member}>.<{}> }
+
 " active record associations
 Snippet bt belongs_to :<{}>
 Snippet ho has_one :<{}>
