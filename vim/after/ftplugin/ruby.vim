@@ -91,7 +91,12 @@ Snippet itred it { response.should redirect_to(<{}>) }
 "" rspec-rr
 Snippet shrec should have_received.<{}>
 
+" mocha
+Snippet stubs stubs(:<{method}>).returns(<{result}>)
+Snippet expects expects(:<{method}>).with(<{params}>).returns(<{result}>)<{}>
+Snippet expectse expects(:<{method}>).with().returns(<{result}>)<{}>
+
 " assertions
 Snippet ass assert <{}>
-Snippet asseq assert_equal <{expected}>, <{}>
-Snippet assneq assert_not_equal <{unexpected}>, <{}>
+Snippet ase assert_equal <{expected}>, <{}>
+Snippet ane assert_not_equal <{unexpected}>, <{}>
