@@ -29,8 +29,8 @@ Snippet habtm has_and_belongs_to_many :<{}>
 Snippet hmt has_many :<{association}>, :through => <{}>
 
 " active record validations
-Snippet valpo validates_presence_of :<{attribute}><CR><{}>
-Snippet valpows validates_presence_of :<{attribute}>, :scope => <{scope}><CR><{}>
+Snippet vpo validates_presence_of :<{attribute}><{}>
+Snippet vpos validates_presence_of :<{attribute}>, :scope => <{scope}><CR><{}>
 
 " shoulda validation macros
 Snippet shal should_allow_values_for :<{attribute}>, <{}>
@@ -81,6 +81,15 @@ Snippet itsh it "should <{description}>" do<CR>``SpecSubject()``.should <{}><CR>
 Snippet itshbe it "should <{description}>" do<CR>``SpecSubject()``.should be_<{}><CR>end
 Snippet atsh it "should <{description}>" do<CR>``SpecSubject()``.<{attr}>.should <{}><CR>end
 Snippet atshbe it "should <{description}>" do<CR>``SpecSubject()``.<{attr}>.should be_<{}><CR>end
+Snippet sheq should == <{}>
+
+" rspec-rails
+Snippet itres it { response.should be_<{}> }
+Snippet itrend it { response.should render_template(:<{}>) }
+Snippet itred it { response.should redirect_to(<{}>) }
+
+"" rspec-rr
+Snippet shrec should have_received.<{}>
 
 " assertions
 Snippet ass assert <{}>
