@@ -133,5 +133,5 @@ let g:snippetsEmu_key = "<S-Tab>"
 
 " Tab completion options
 " (only complete to the longest unambiguous match, and show a menu)
-let completeopt=longest,menu
-let wildmode=list:longest,list:full
+set completeopt=longest,menu
+set wildmode=list:longest,list:full
