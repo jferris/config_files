@@ -4,3 +4,4 @@ function! Search(args)
 endfunction
 
 command! -nargs=* -complete=file Search call Search(<q-args>)
+nmap K :Search "\b<C-R><C-W>\b"<CR>
