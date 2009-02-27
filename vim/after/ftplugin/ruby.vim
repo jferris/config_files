@@ -17,9 +17,14 @@ function! SpecSubject()
   return "@" . rails#underscore(SpecDescribed())
 endfunction
 
+function! IterVar(collection)
+  let collection = substitute(a:collection,"^@","","")
+  return rails#singularize(collection)
+endfunction
+
 " general ruby snippets
-Snippet each <{collection}>.each do |<{member}>|<CR><{member}>.<{}><CR>end
-Snippet collect <{collection}>.collect {|<{member}>| <{member}>.<{}> }
+Snippet each <{collection}>.each do |<{collection:IterVar(@z)}>|<CR><{}><CR>end
+Snippet collect <{collection}>.collect {|<{member}>| <{}> }
 
 " active record associations
 Snippet bt belongs_to :<{}>
@@ -97,6 +102,10 @@ Snippet expects expects(:<{method}>).with(<{params}>).returns(<{result}>)<{}>
 Snippet expectse expects(:<{method}>).with().returns(<{result}>)<{}>
 
 " assertions
-Snippet ass assert <{}>
+Snippet as assert <{}>
 Snippet ase assert_equal <{expected}>, <{}>
-Snippet ane assert_not_equal <{unexpected}>, <{}>
+Snippet asne assert_not_equal <{unexpected}>, <{}>
+Snippet asn assert_nil <{}>
+Snippet asnn assert_not_nil <{}>
+Snippet asm assert_match <{expected}>, <{}>
+Snippet asnm assert_match <{unexpected}>, <{}>
