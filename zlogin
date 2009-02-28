@@ -18,8 +18,11 @@ setopt prompt_subst
 # prompt
 export PS1='$(git_prompt_info)[${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}] '
 
-# autocompletion for tu/tf
-_units() { compadd `ruby_test -l unit` }
-_functionals() { compadd `ruby_test -l functional` }
-compdef _units tu
-compdef _functionals tf
+# autocompletion for ruby_test
+# works with tu/tf aliases
+_ruby_tests() {
+  if [[ -n $words[2] ]]; then
+    compadd `ruby_test -l ${words[2]}`
+  fi
+}
+compdef _ruby_tests ruby_test
