@@ -117,3 +117,8 @@ Snippet rendn render :nothing => true<{}>
 Snippet rendf render :file => '<{}>'
 Snippet rendt render :template => '<{}>'
 Snippet rendl render :layout => '<{}>'
+
+" Cucumber step definitions
+Snippet Given Given /^<{step}>$/ do<{}><CR>end
+Snippet When When /^<{step}>$/ do<{}><CR>end
+Snippet Then Then /^<{step}>$/ do<{}><CR>end
