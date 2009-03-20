@@ -63,15 +63,15 @@ Snippet shhm should_have_many :<{association}><CR><{}>
 Snippet shho should_have_one :<{association}><CR><{}>
 
 " shoulda controller macros
-Snippet shass should_assign_to :<{variable}><CR><{}>
-Snippet shnass should_not_assign_to :<{variable}><CR><{}>
-Snippet shnfl should_not_set_the_flash<CR><{}>
-Snippet shred should_redirect_to "<{url}>"<CR><{}>
-Snippet shrend should_render_template :<{template}><CR><{}>
-Snippet shlay should_render_without_layout :<{layout}><CR><{}>
-Snippet shres should_respond_with :<{response}><CR><{}>
+Snippet shass should_assign_to :<{}>
+Snippet shnass should_not_assign_to :<{}>
+Snippet shnfl should_not_set_the_flash<{}>
+Snippet shred should_redirect_to "<{}>"
+Snippet shrend should_render_template :<{}>
+Snippet shlay should_render_without_layout :<{}>
+Snippet shres should_respond_with :<{}>
 Snippet shroute should_route :<{method}>, "<{path}>", :action => :<{}>
-Snippet shfl should_set_the_flash_to :<{}>
+Snippet shfl should_set_the_flash_to /<{}>/i
 
 " shoulda contexts
 Snippet cont context "<{description}>" do<CR>setup do<CR><{}><CR>end<CR>end
@@ -87,6 +87,7 @@ Snippet itshbe it "should <{description}>" do<CR>``SpecSubject()``.should be_<{}
 Snippet atsh it "should <{description}>" do<CR>``SpecSubject()``.<{attr}>.should <{}><CR>end
 Snippet atshbe it "should <{description}>" do<CR>``SpecSubject()``.<{attr}>.should be_<{}><CR>end
 Snippet sheq should == <{}>
+Snippet spechelper require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')<{}>
 
 " rspec-rails
 Snippet itres it { response.should be_<{}> }
@@ -109,3 +110,10 @@ Snippet asn assert_nil <{}>
 Snippet asnn assert_not_nil <{}>
 Snippet asm assert_match <{expected}>, <{}>
 Snippet asnm assert_match <{unexpected}>, <{}>
+
+" render
+Snippet renda render :action => '<{}>'
+Snippet rendn render :nothing => true<{}>
+Snippet rendf render :file => '<{}>'
+Snippet rendt render :template => '<{}>'
+Snippet rendl render :layout => '<{}>'
