@@ -27,3 +27,6 @@ export PS1='[${SSH_CONNECTION+"%n@%m:"}%~] '
 
 # ignore duplicate history entries
 setopt histignoredups
+
+# keep more history
+export HISTSIZE=200
