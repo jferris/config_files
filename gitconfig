@@ -17,4 +17,4 @@
   ps = push
   plre = pull --rebase
   st = status
-  unpushed = log HEAD..origin
+  out = log origin..HEAD
