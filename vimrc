@@ -77,16 +77,39 @@ set expandtab
 " Always display the status line
 set laststatus=2
 
+" \ is the leader character
+let mapleader = "\\"
+
+" Edit the README_FOR_APP (makes :R commands work)
+map <Leader>R :e doc/README_FOR_APP<CR>
+
+" Leader shortcuts for Rails commands
+map <Leader>m :Rmodel 
+map <Leader>c :Rcontroller 
+map <Leader>v :Rview 
+map <Leader>u :Runittest 
+map <Leader>f :Rfunctionaltest 
+map <Leader>tm :RTmodel 
+map <Leader>tc :RTcontroller 
+map <Leader>tv :RTview 
+map <Leader>tu :RTunittest 
+map <Leader>tf :RTfunctionaltest 
+map <Leader>sm :RSmodel 
+map <Leader>sc :RScontroller 
+map <Leader>sv :RSview 
+map <Leader>su :RSunittest 
+map <Leader>sf :RSfunctionaltest 
+
 " Hide search highlighting
-map ,nh :nohls <CR>
+map <Leader>h :set invhls <CR>
 
 " Opens an edit command with the path of the currently edited file filled in
-" Normal mode: ,e
-map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
+" Normal mode: <Leader>e
+map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
 " Opens a tab edit command with the path of the currently edited file filled in
-" Normal mode: ,t
-map ,t :tabe <C-R>=expand("%:p:h") . "/" <CR>
+" Normal mode: <Leader>t
+map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 " Inserts the path of the currently edited file into a command
 " Command mode: Ctrl+P
@@ -141,3 +164,7 @@ let g:snippetsEmu_key = "<S-Tab>"
 " (only complete to the longest unambiguous match, and show a menu)
 set completeopt=longest,menu
 set wildmode=list:longest,list:full
+
+" case only matters with mixed case expressions
+set ignorecase
+set smartcase
