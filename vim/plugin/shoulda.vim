@@ -9,6 +9,13 @@ function! ShouldaReplaceEach(macro, template)
     let attrs = matchlist(line, "^\\(\\s\\+\\)" . a:macro . " \\(.*\\)")
     let lead = attrs[1]
     let attrs = split(attrs[2], ",\\s*")
+    let opts = []
+    while match(attrs[-1], "=>") != -1
+      let opts = opts + [attrs[-1]]
+      let attrs = attrs[:-2]
+    endwhile
+    " let opts = join(opts, ",")
+    echo opts
     let replace = 1
     for attr in attrs
       if attr != ""
