@@ -165,7 +165,12 @@ let g:snippetsEmu_key = "<S-Tab>"
 " (only complete to the longest unambiguous match, and show a menu)
 set completeopt=longest,menu
 set wildmode=list:longest,list:full
+set complete=.,t
 
 " case only matters with mixed case expressions
 set ignorecase
 set smartcase
+
+" Tags
+let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
+
