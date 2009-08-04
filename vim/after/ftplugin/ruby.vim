@@ -110,6 +110,8 @@ Snippet asn assert_nil <{}>
 Snippet asnn assert_not_nil <{}>
 Snippet asm assert_match <{expected}>, <{}>
 Snippet asnm assert_match <{unexpected}>, <{}>
+Snippet assel assert_select "<{}>"
+Snippet asre assert_received(<{subject}>) {|p| p.<{}> }
 
 " render
 Snippet renda render :action => '<{}>'
