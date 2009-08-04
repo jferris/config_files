@@ -27,6 +27,15 @@ _ruby_tests() {
 }
 compdef _ruby_tests ruby_test
 
+# autocompletion for ruby_tu_rs
+# works with su/sf aliases
+_ruby_mixed_tests() {
+  if [[ -n $words[2] ]]; then
+    compadd `ruby_tu_rs -l ${words[2]}`
+  fi
+}
+compdef _ruby_mixed_tests ruby_tu_rs
+
 _git_remote_branch() {
   ref=$(git symbolic-ref HEAD 2> /dev/null)
   if [[ -n $ref ]]; then
@@ -45,3 +54,12 @@ _git_remote_branch() {
   fi
 }
 compdef _git_remote_branch grb
+
+# autocompletion for schema
+_rails_tables() {
+  if [[ -n $words[2] ]]; then
+    compadd `schema -l ${words[2]}`
+  fi
+}
+compdef _rails_tables schema
+
