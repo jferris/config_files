@@ -80,3 +80,26 @@ function! ToRSpec()
 endfunction
 
 command! ToRSpec call ToRSpec()
+
+function! ToRSpecContext()
+  " Remove trailing space
+  silent! %s/\s\+$//g
+
+  " Context
+  silent! %s/^\(\s\+\)context /\1describe /
+  silent! %s/^\(\s\+\)setup /\1before /
+  silent! %s/^\(\s\+\)teardown /\1after /
+  silent! %s/^\(\s\+\)should \"/\1it \"should /
+  silent! %s/^\(\s\+\)def setup\s*$/\1before do/
+  silent! %s/^\(\s\+\)def teardown\s*$/\1after do/
+
+  " Top-level classes
+  silent! %s/class \(\w\+\)Test < Test::Unit::TestCase/describe \1 do/
+
+  " Highlight unreplaced macros/assertions
+  highlight tunit ctermbg=red guibg=red
+  call matchadd("tunit", "should_\\(not \\|behave_like\\)\\@!\\w*")
+  call search("should_", "wc")
+endfunction
+
+command! ToRSpecContext call ToRSpecContext()
