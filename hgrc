@@ -1,0 +1,7 @@
+# ADD LOCAL CONFIGURATION HERE
+
+
+# DO NOT EDIT BELOW THIS LINE
+[extensions]
+color =
+hgext.rebase =
