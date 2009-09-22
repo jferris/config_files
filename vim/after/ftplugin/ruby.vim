@@ -111,7 +111,7 @@ Snippet asnn assert_not_nil <{}>
 Snippet asm assert_match <{expected}>, <{}>
 Snippet asnm assert_match <{unexpected}>, <{}>
 Snippet assel assert_select "<{}>"
-Snippet asre assert_received(<{subject}>) {|p| p.<{}> }
+Snippet asre assert_received(<{subject}>, :<{method}>) { |expect| expect.<{}> }
 
 " render
 Snippet renda render :action => '<{}>'
@@ -124,3 +124,6 @@ Snippet rendl render :layout => '<{}>'
 Snippet Given Given /^<{step}>$/ do<{}><CR>end
 Snippet When When /^<{step}>$/ do<{}><CR>end
 Snippet Then Then /^<{step}>$/ do<{}><CR>end
+
+" Search shortcuts
+nmap d/ /^\s*\(def \\| def self\.\)
