@@ -21,3 +21,9 @@ class Object
     (methods - Object.instance_methods).sort
   end
 end
+
+# copy a string to the clipboard
+def pbcopy(string)
+  `echo "#{string}" | pbcopy`
+  string
+end
