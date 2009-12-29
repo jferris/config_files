@@ -17,14 +17,27 @@ function! SpecSubject()
   return "@" . rails#underscore(SpecDescribed())
 endfunction
 
-function! IterVar(collection)
-  let collection = substitute(a:collection,"^@","","")
+function! IterVar()
+  let line = getline('.')
+  let col = col('.')
+  let collection = line[0 : col]
+  " remove .each or .collect
+  let collection = substitute(collection,"\\.[^.]*$","","")
+  " remove leading space
+  let collection = substitute(collection,"^\\s\\+","","")
+  " remove chains like post.users
+  let collection = substitute(collection,"^.*\\.","","")
+  " remove instance variable punctuatoin
+  let collection = substitute(collection,"^@","","")
+  " singularize
   return rails#singularize(collection)
 endfunction
 
 " general ruby snippets
-Snippet each <{collection}>.each do |<{collection:IterVar(@z)}>|<CR><{}><CR>end
-Snippet collect <{collection}>.collect {|<{member}>| <{}> }
+Snippet each each do |``IterVar()``|<CR><{}><CR>end
+Snippet map map do |``IterVar()``|<CR><{}><CR>end
+Snippet eachl each { |``IterVar()``| <{}> }
+Snippet mapl map { |``IterVar()``| <{}> }
 
 " active record associations
 Snippet bt belongs_to :<{}>
@@ -126,4 +139,4 @@ Snippet When When /^<{step}>$/ do<{}><CR>end
 Snippet Then Then /^<{step}>$/ do<{}><CR>end
 
 " Search shortcuts
-nmap d/ /^\s*\(def \\| def self\.\)
+nmap m/ /^\s*\(def \\| def self\.\)
