@@ -140,3 +140,8 @@ Snippet Then Then /^<{step}>$/ do<{}><CR>end
 
 " Search shortcuts
 nmap m/ /^\s*\(def \\| def self\.\)
+
+" Start a new method in a Ruby class
+" <Leader>nm
+nmap <Leader>nm gg/^\s\+\(private\\|protected\)\\|^end<Enter>kO<Enter>
+
