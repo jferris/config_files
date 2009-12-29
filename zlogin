@@ -27,6 +27,15 @@ _ruby_tests() {
 }
 compdef _ruby_tests ruby_test
 
+# autocompletion for ruby_spec
+# works with sm/sc aliases
+_ruby_specs() {
+  if [[ -n $words[2] ]]; then
+    compadd `ruby_spec -l ${words[2]}`
+  fi
+}
+compdef _ruby_specs ruby_spec
+
 # autocompletion for ruby_tu_rs
 # works with su/sf aliases
 _ruby_mixed_tests() {
@@ -62,4 +71,10 @@ _rails_tables() {
   fi
 }
 compdef _rails_tables schema
+
+# autocompletion for cuc
+_cucumber_features() {
+  compadd `ls features/**/*.feature | sed "s/features\/\(.*\).feature/\1/"`
+}
+compdef _cucumber_features cuc
 
