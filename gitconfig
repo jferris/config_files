@@ -2,12 +2,16 @@
 
 
 # DO NOT EDIT BELOW THIS LINE
+[push]
+  default = tracking
 [color]
 	diff = auto
 	status = auto
 	branch = auto
 [core]
 	excludesfile = ~/.gitignore
+[format]
+  pretty = %Cblue%h%Creset %Cgreen[%cr]%Creset (%an) %s
 [alias]
   c = commit -m
   a = add
@@ -18,3 +22,7 @@
   plre = pull --rebase
   st = status
   out = log origin..HEAD
+  qpl = log --pretty=\"%Cblue%h%Creset %Cgreen[%cr]%Creset %s\" origin/production..origin/master
+  graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  ci = commit
+  ca = commit --amend
