@@ -1,6 +1,26 @@
+function! s:ShouldaBufSyntax()
+  if (!exists("g:rails_syntax") || g:rails_syntax)
+    let t = RailsFileType()
+    if &syntax == 'ruby'
+      if t =~ '^test'
+        syn keyword rubyRailsTestMethod assert_bad_value   assert_contains   assert_did_not_send_email   assert_does_not_contain   assert_good_value   assert_same_elements   assert_save   assert_sent_email   assert_valid   pretty_error_messages   report!
+      endif
+      if t =~ '^test-unit'
+        syn keyword rubyRailsTestMethod should_allow_values_for   should_belong_to   should_ensure_length_at_least   should_ensure_length_in_range   should_ensure_length_is   should_ensure_value_in_range   should_have_and_belong_to_many   should_have_class_methods   should_have_db_column   should_have_db_columns   should_have_index   should_have_indices   should_have_instance_methods   should_have_many   should_have_named_scope   should_have_one   should_have_readonly_attributes   should_not_allow_values_for   should_only_allow_numeric_values_for   should_protect_attributes   should_require_acceptance_of   should_require_attributes   should_require_unique_attributes  
+      elseif t=~ '^test-functional'
+        syn keyword rubyRailsTestMethod should_assign_to   should_be_restful   should_not_assign_to   should_not_set_the_flash   should_redirect_to   should_render_a_form   should_render_template   should_respond_with   should_set_the_flash_to  assert_xml_response   request_xml  should_respond_with_xml   should_respond_with_xml_for
+      endif
+    endif
+  endif
+endfunction
+
+augroup railsPluginDetect
+  autocmd Syntax ruby if exists("b:rails_root") | call s:ShouldaBufSyntax() | endif
+augroup END
+
 function! ShouldaReplaceEach(macro, template)
   let lineno = search(a:macro, "wnc")
-  if lineno > 0
+  while lineno > 0
     let line = getline(lineno)
     while match(line, ",\\s*$") != -1
       execute lineno . "," . (lineno + 1) . "join"
@@ -28,7 +48,8 @@ function! ShouldaReplaceEach(macro, template)
         endif
       endif
     endfor
-  endif
+    let lineno = search(a:macro, "wnc")
+  endwhile
 endfunction
 
 function! ToRSpec()
@@ -51,7 +72,9 @@ function! ToRSpec()
   silent! %s/should_render_template \(.*\)/it { should render_template(\1) }/
   silent! %s/should_route \([:a-z]\+\), \([^,]\+\), \(.\+\)/it { should route(\1, \2).to(\3) }/
   silent! %s/\(\s*\)should_allow_values_for\s*\([^,]\+\), \([^,]*,.*\)/\1[\3].each do |value|\1  it { should allow_value(value).for(\2) }\1end/
+  silent! %s/should_ensure_length_at_least\s*\([^,]\+\),\s*\(.\+\)/it { should ensure_length_of(\1).is_at_least(\2) }/
   silent! %s/should_allow_values_for\s*\([^,]\+\), \(.*\)/it { should allow_value(\2).for(\1) }/
+  silent! %s/\(\s*\)should_not_allow_values_for\s*\([^,]\+\),\s*\([^,]*,.*\),\s*:message\s*=>\s*\(.\+\)/\1[\3].each do |value|\1  it { should_not allow_value(value).for(\2).with_message(\4) }\1end/
   silent! %s/\(\s*\)should_not_allow_values_for\s*\([^,]\+\), \([^,]*,.*\)/\1[\3].each do |value|\1  it { should_not allow_value(value).for(\2) }\1end/
   silent! %s/should_not_allow_values_for\s*\([^,]\+\), \(.*\)/it { should_not allow_value(\2).for(\1) }/
   silent! %s/^\(\s*\)should_redirect_to(['"]\(.*\)['"]) { \(.*\) }/\1it "should redirect to \2" do\1  should redirect_to(\3)\1end/
@@ -59,6 +82,8 @@ function! ToRSpec()
   call ShouldaReplaceEach("should_validate_presence_of", "it { should validate_presence_of(%s) }")
   call ShouldaReplaceEach("should_validate_uniqueness_of", "it { should validate_uniqueness_of(%s) }")
   call ShouldaReplaceEach("should_not_allow_mass_assignment_of", "it { should_not allow_mass_assignment_of(%s) }")
+  call ShouldaReplaceEach("should_have_many", "it { should have_many(%s) }")
+  call ShouldaReplaceEach("should_belong_to", "it { should belong_to(%s) }")
 
   " Assertions
   silent! %s/assert ! \?\(.*\)\.\(\w\+\)?$/\1.should_not be_\2/
@@ -73,7 +98,7 @@ function! ToRSpec()
   silent! %s/assert_not_equal \([^,]*\), \([^,]*\)$/\2.should_not == \1/
   silent! %s/assert_match \([^,]*\), \([^,]*\)/\2.should =\~ \1/
   silent! %s/assert_kind_of \([^,]*\), \([^,]*\)/\2.should be_kind_of(\1)/
-  silent! %s/assert_received(\([^)]\+\)) {[^ ]\+ [^\.]\+.\(.*\) }/\1.should have_received.\2/
+  silent! %s/assert_received(\([^,]\+\),\s*\([^)]\+\))\s*{\s*[^ ]\+ [^\.]\+.\(.*\)\s*}/\1.should have_received(\2).\3/
 
   " Top-level classes
   silent! %s/class \(\w\+\)Test < Test::Unit::TestCase/describe \1 do/
@@ -101,7 +126,7 @@ function! ToRSpecContext()
   silent! %s/^\(\s\+\)def teardown\s*$/\1after do/
 
   " Top-level classes
-  silent! %s/class \(\w\+\)Test < Test::Unit::TestCase/describe \1 do/
+  silent! %s/class \(\w\+\)Test < .*::TestCase/describe \1 do/
 
   " Highlight unreplaced macros/assertions
   highlight tunit ctermbg=red guibg=red
