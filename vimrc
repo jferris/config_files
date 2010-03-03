@@ -23,7 +23,7 @@ map Q gq
 " Also switch on highlighting the last used search pattern.
 if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
-  set hlsearch
+  set nohlsearch
 endif
 
 " Only do this part when compiled with support for autocommands.
@@ -86,6 +86,8 @@ map <Leader>c :Rcontroller
 map <Leader>v :Rview 
 map <Leader>u :Runittest 
 map <Leader>f :Rfunctionaltest 
+map <Leader>i :Rintegrationtest 
+map <Leader>h :Rhelper 
 map <Leader>tm :RTmodel 
 map <Leader>tc :RTcontroller 
 map <Leader>tv :RTview 
@@ -96,9 +98,10 @@ map <Leader>sc :RScontroller
 map <Leader>sv :RSview 
 map <Leader>su :RSunittest 
 map <Leader>sf :RSfunctionaltest 
+map <Leader>si :RSintegrationtest 
 
 " Hide search highlighting
-map <Leader>h :set invhls <CR>
+map <Leader>l :set invhls <CR>
 
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>e
