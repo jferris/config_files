@@ -18,15 +18,6 @@ if &cp || (exists("g:loaded_rails") && g:loaded_rails) && !(exists("g:rails_debu
 endif
 let g:loaded_rails = 1
 
-" Apparently, the nesting level within Vim when the Ruby interface is
-" initialized determines how much stack space Ruby gets.  In previous
-" versions of rails.vim, sporadic stack overflows occured when omnicomplete
-" was used.  This was apparently due to rails.vim having first initialized
-" ruby deep in a nested function call.
-if has("ruby")
-  silent! ruby nil
-endif
-
 " Utility Functions {{{1
 
 function! s:error(str)
@@ -70,6 +61,7 @@ call s:SetOptDefault("rails_statusline",1)
 call s:SetOptDefault("rails_syntax",1)
 call s:SetOptDefault("rails_mappings",1)
 call s:SetOptDefault("rails_abbreviations",1)
+call s:SetOptDefault("rails_ctags_arguments","--exclude=\"*.js\"")
 call s:SetOptDefault("rails_expensive",1)
 call s:SetOptDefault("rails_dbext",g:rails_expensive)
 call s:SetOptDefault("rails_default_file","README")
