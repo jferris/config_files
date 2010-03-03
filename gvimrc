@@ -11,7 +11,7 @@ set guioptions-=T
 set guioptions+=c
 
 " Local config
-if filereadable(".gvimrc.local")
-  source .gvimrc.local
+if filereadable($HOME . "/.gvimrc.local")
+  source ~/.gvimrc.local
 endif
 
