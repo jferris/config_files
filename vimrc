@@ -116,7 +116,7 @@ map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
 " Maps autocomplete to tab
-imap <Tab> <C-N>
+imap <Tab> <C-P>
 
 " Duplicate a selection
 " Visual mode: D
@@ -165,15 +165,12 @@ set numberwidth=5
 let g:snippetsEmu_key = "<S-Tab>"
 
 " Tab completion options
-" (only complete to the longest unambiguous match, and show a menu)
-set completeopt=longest,menu
 set wildmode=list:longest,list:full
 set complete=.,t
-
-" case only matters with mixed case expressions
-set ignorecase
-set smartcase
 
 " Tags
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
+" Window navigation
+nmap <C-J> <C-W><C-J>
+nmap <C-K> <C-W><C-K>
