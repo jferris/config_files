@@ -26,3 +26,5 @@
   graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   ci = commit
   ca = commit --amend
+  pr = remote prune origin
+  up = !git fetch origin && git rebase origin/master
