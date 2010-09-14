@@ -1,8 +1,8 @@
 " Webrat steps
 Snippet press When I press "<{}>"
 Snippet follow When I follow "<{}>"
-Snippet fillin When I fill in "<{}>"
-Snippet select When I select "<{}>"
+Snippet fillin When I fill in "<{field}>" with "<{}>"
+Snippet select When I select "<{value}>" from "<{}>"
 Snippet check When I check "<{}>"
 Snippet uncheck When I uncheck "<{}>"
 Snippet choose When I choose "<{}>"
