@@ -166,7 +166,7 @@ let g:snippetsEmu_key = "<S-Tab>"
 
 " Tab completion options
 set wildmode=list:longest,list:full
-set complete=.,t
+set complete=.,w,t
 
 " Tags
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
