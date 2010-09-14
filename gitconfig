@@ -11,7 +11,7 @@
 [core]
 	excludesfile = ~/.gitignore
 [format]
-  pretty = %Cblue%h%Creset %Cgreen[%cr]%Creset (%an) %s
+  pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
 [alias]
   c = commit -m
   a = add
@@ -28,3 +28,4 @@
   ca = commit --amend
   pr = remote prune origin
   up = !git fetch origin && git rebase origin/master
+  rbc = rebase --continue
