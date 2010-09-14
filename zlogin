@@ -82,3 +82,12 @@ _cucumber_features() {
   compadd `ls features/**/*.feature | sed "s/features\/\(.*\).feature/\1/"`
 }
 compdef _cucumber_features cuc
+
+# restore previous cwd
+if [[ -f ~/.last_cwd ]]; then
+  cd `cat ~/.last_cwd`
+fi
+_save_last_cwd() {
+  echo `pwd` > ~/.last_cwd
+}
+chpwd_functions=( "${chpwd_functions[@]}" _save_last_cwd )
