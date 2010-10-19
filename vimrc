@@ -2,8 +2,8 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
+" don't allow backspacing over everything in insert mode
+set backspace=
 
 set nobackup
 set nowritebackup
@@ -183,4 +183,9 @@ autocmd User Rails map <Leader>si :RSintegrationtest
 autocmd User Rails map <Leader>g :Rconfig 
 autocmd User Rails map <Leader>sg :RSconfig 
 autocmd User Rails map <Leader>tg :RTconfig 
+
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
 
