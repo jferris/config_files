@@ -29,3 +29,5 @@
   pr = remote prune origin
   up = !git fetch origin && git rebase origin/master
   rbc = rebase --continue
+  rbi = rebase -i
+  mm = !test `git rev-parse master` = $(git merge-base HEAD master) && git checkout master && git merge HEAD@{1} || echo "Non-fastforward"
