@@ -26,7 +26,14 @@ function! ShouldaReplaceEach(macro, template)
       execute lineno . "," . (lineno + 1) . "join"
       let line = getline(lineno)
     endwhile
-    let attrs = matchlist(line, "^\\(\\s\\+\\)" . a:macro . " \\(.*\\)")
+    let pieces = split(line, "\\s*{\\s*")
+    let line = pieces[0]
+    if len(pieces) == 1
+      let withArg = ""
+    else
+      let withArg = ".with(" . substitute(pieces[1], "\\s*}\\s*$", "", "") . ")"
+    endif
+    let attrs = matchlist(line, "^\\(\\s\\+\\)" . a:macro . "(\\?\\([^)]*\\))\\?\\s*$")
     let lead = attrs[1]
     let attrs = split(attrs[2], ",\\s*")
     let opts = []
@@ -34,12 +41,12 @@ function! ShouldaReplaceEach(macro, template)
       let opts = opts + [attrs[-1]]
       let attrs = attrs[:-2]
     endwhile
-    " let opts = join(opts, ",")
     echo opts
     let replace = 1
     for attr in attrs
       if attr != ""
         let result = lead . substitute(a:template, "%s", attr, "")
+        let result = substitute(result, ") }", ")" . withArg . " }", "")
         if replace
           let replace = 0
           call setline(lineno, result)
@@ -49,6 +56,52 @@ function! ShouldaReplaceEach(macro, template)
       endif
     endfor
     let lineno = search(a:macro, "wnc")
+  endwhile
+endfunction
+
+function! AppendAfterPrevious(pattern, startline, content)
+  let lineno = a:startline
+  while lineno > 0
+    let line = getline(lineno)
+    if match(line, a:pattern) != -1
+      call append(lineno, a:content)
+      let lineno = 0
+    else
+      let lineno = lineno - 1
+    endif
+  endwhile
+endfunction
+
+function! ShouldaReplaceShouldChange()
+  let lineno = search("should_change", "wnc")
+  while lineno > 0
+    let line = getline(lineno)
+    let parts = matchlist(line, "\\(\\s\\+\\)should_change(\\([^,]\\+\\), :by => \\(\\d\\+\\)) { \\(.*\\) }")
+    let lead = parts[1]
+    let desc = substitute(parts[2], "['\"]", "", "g")
+    let delta = parts[3]
+    let rubyExpr = parts[4]
+    let ivar = "@" . tolower(substitute(desc, "\\W", "_", "g"))
+    call setline(lineno, lead . "it \"should change " . desc . " by " . delta . "\" do")
+    call append(lineno, lead . "end")
+    call append(lineno, lead . "  (" . rubyExpr . ").should == " . ivar . " + " . delta)
+    call AppendAfterPrevious("describe", lineno, lead . "before { " . ivar . " = " . rubyExpr . "}")
+    let lineno = search("should_change", "wnc")
+  endwhile
+
+  let lineno = search("should_not_change", "wnc")
+  while lineno > 0
+    let line = getline(lineno)
+    let parts = matchlist(line, "\\(\\s\\+\\)should_not_change(\\([^)]\\+\\)) { \\(.*\\) }")
+    let lead = parts[1]
+    let desc = substitute(parts[2], "['\"]", "", "g")
+    let rubyExpr = parts[3]
+    let ivar = "@" . tolower(substitute(desc, "\\W", "_", "g"))
+    call setline(lineno, lead . "it \"should not change " . desc . "\" do")
+    call append(lineno, lead . "end")
+    call append(lineno, lead . "  (" . rubyExpr . ").should == " . ivar)
+    call AppendAfterPrevious("describe", lineno, lead . "before { " . ivar . " = " . rubyExpr . "}")
+    let lineno = search("should_not_change", "wnc")
   endwhile
 endfunction
 
@@ -71,6 +124,7 @@ function! ToRSpec()
   silent! %s/should_respond_with \(.*\)/it { should respond_with(\1) }/
   silent! %s/should_render_template \(.*\)/it { should render_template(\1) }/
   silent! %s/should_route \([:a-z]\+\), \([^,]\+\), \(.\+\)/it { should route(\1, \2).to(\3) }/
+  silent! %s/should_deny_access :flash => \(.*\)/it { should deny_access.flash(\1) }/
   silent! %s/\(\s*\)should_allow_values_for\s*\([^,]\+\), \([^,]*,.*\)/\1[\3].each do |value|\1  it { should allow_value(value).for(\2) }\1end/
   silent! %s/should_ensure_length_at_least\s*\([^,]\+\),\s*\(.\+\)/it { should ensure_length_of(\1).is_at_least(\2) }/
   silent! %s/should_allow_values_for\s*\([^,]\+\), \(.*\)/it { should allow_value(\2).for(\1) }/
@@ -78,12 +132,16 @@ function! ToRSpec()
   silent! %s/\(\s*\)should_not_allow_values_for\s*\([^,]\+\), \([^,]*,.*\)/\1[\3].each do |value|\1  it { should_not allow_value(value).for(\2) }\1end/
   silent! %s/should_not_allow_values_for\s*\([^,]\+\), \(.*\)/it { should_not allow_value(\2).for(\1) }/
   silent! %s/^\(\s*\)should_redirect_to(['"]\(.*\)['"]) { \(.*\) }/\1it "should redirect to \2" do\1  should redirect_to(\3)\1end/
+  call ShouldaReplaceShouldChange()
   call ShouldaReplaceEach("should_filter_params", "it { should filter_param(%s) }")
+  call ShouldaReplaceEach("should_assign_to", "it { should assign_to(%s) }")
   call ShouldaReplaceEach("should_validate_presence_of", "it { should validate_presence_of(%s) }")
   call ShouldaReplaceEach("should_validate_uniqueness_of", "it { should validate_uniqueness_of(%s) }")
   call ShouldaReplaceEach("should_not_allow_mass_assignment_of", "it { should_not allow_mass_assignment_of(%s) }")
+  call ShouldaReplaceEach("should_allow_mass_assignment_of", "it { should allow_mass_assignment_of(%s) }")
   call ShouldaReplaceEach("should_have_many", "it { should have_many(%s) }")
   call ShouldaReplaceEach("should_belong_to", "it { should belong_to(%s) }")
+  call ShouldaReplaceEach("should_have_one", "it { should have_one(%s) }")
 
   " Assertions
   silent! %s/assert ! \?\(.*\)\.\(\w\+\)?$/\1.should_not be_\2/
@@ -99,9 +157,10 @@ function! ToRSpec()
   silent! %s/assert_match \([^,]*\), \([^,]*\)/\2.should =\~ \1/
   silent! %s/assert_kind_of \([^,]*\), \([^,]*\)/\2.should be_kind_of(\1)/
   silent! %s/assert_received(\([^,]\+\),\s*\([^)]\+\))\s*{\s*[^ ]\+ [^\.]\+.\(.*\)\s*}/\1.should have_received(\2).\3/
+  silent! %s/assert_contains \([^,]*\), \([^,]*\)$/\1.should =\~ \2/
 
   " Top-level classes
-  silent! %s/class \(\w\+\)Test < Test::Unit::TestCase/describe \1 do/
+  silent! %s/class \(.\+\)Test < .*::TestCase/describe \1 do/
 
   " Highlight unreplaced macros/assertions
   highlight tunit ctermbg=red guibg=red
@@ -126,7 +185,7 @@ function! ToRSpecContext()
   silent! %s/^\(\s\+\)def teardown\s*$/\1after do/
 
   " Top-level classes
-  silent! %s/class \(\w\+\)Test < .*::TestCase/describe \1 do/
+  silent! %s/class \(.\+\)Test < .*::TestCase/describe \1 do/
 
   " Highlight unreplaced macros/assertions
   highlight tunit ctermbg=red guibg=red
