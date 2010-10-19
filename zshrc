@@ -30,3 +30,7 @@ setopt histignoredups
 
 # keep more history
 export HISTSIZE=200
+
+# look for ey config in project dirs
+export EYRC=./.eyrc
+
