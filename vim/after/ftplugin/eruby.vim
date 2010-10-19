@@ -16,13 +16,17 @@ function! ERubyIterVar()
   return rails#singularize(collection)
 endfunction
 
-" general ruby snippets
+" general erb snippets
 Snippet each each do |``ERubyIterVar()``| -%><CR><{}><CR><% end -%>
 Snippet map map do |``ERubyIterVar()``|<CR><{}><CR>end
-" Snippet each <% <{collection}>.each do |<{member}>| -%><CR><{}><CR><% end %>
-Snippet h <%=h <{}> %>
 Snippet = <%= <{}> %>
-Snippet rendp <%= render :partial => '<{}>' %>
-Snippet rendc <%= render :partial => @<{}> %>
-Snippet rendo <%= render :partial => @<{}> %>
-Snippet lt <%= link_to '<{caption}>', <{}> %>
+Snippet if <% if <{}> -%><CR><CR><% end -%>
+Snippet unless <% unless <{}> -%><CR><CR><% end -%>
+
+" rails snippets
+Snippet h <%=h <{}> %>
+Snippet rp <%= render :partial => '<{}>' %>
+Snippet lt <%= link_to <{caption}>, <{}> %>
+Snippet ctf <% content_tag_for :<{tag}>, <{object}> do -%><CR><{}><CR><% end -%>
+Snippet cf <% content_for :<{capture}> do -%><CR><{}><CR><% end -%>
+Snippet cfj <% content_for :javascript do -%><CR><script type="text/javascript"><CR><{}><CR></script><CR><% end -%>
