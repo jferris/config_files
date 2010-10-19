@@ -81,10 +81,8 @@ Snippet shreq should_require_attributes :<{}>
 Snippet shrequniq should_require_unique_attributes :<{}>
 
 " Factory girl
-Snippet F Factory(:<{factory}>)<{}>
-Snippet Fb Factory.build(:<{factory}>)<{}>
-Snippet Fw Factory(:<{factory}>, :<{}>)
-Snippet Fbw Factory.build(:<{factory}>, :<{}>)
+Snippet F Factory(:<{}>)
+Snippet Fb Factory.build(:<{}>)
 
 " shoulda association macros
 Snippet shbt should_belong_to :<{association}><CR><{}>
@@ -102,10 +100,6 @@ Snippet shlay should_render_without_layout :<{}>
 Snippet shres should_respond_with :<{}>
 Snippet shroute should_route :<{method}>, "<{path}>", :action => :<{}>
 Snippet shfl should_set_the_flash_to /<{}>/i
-
-" shoulda contexts
-Snippet cont context "<{description}>" do<CR>setup do<CR><{}><CR>end<CR>end
-Snippet sh should "<{description}>" do<CR><{}><CR>end
 
 "rspec
 Snippet desc ``DefaultSpecDescribe()`` "<{description}>" do<CR><{}><CR>end
