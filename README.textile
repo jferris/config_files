@@ -2,6 +2,8 @@ h1. Joe Ferris' Config Files
 
 a.k.a. dot files
 
+**No longer updated - please see https://github.com/jferris/dotfiles instead.**
+
 h2. Install
 
 Clone this repository, change into the cloned directory, and run:
